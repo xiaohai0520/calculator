@@ -30,13 +30,12 @@ function App() {
   }
 
   const cal = () => {
-    const r = parseFloat(radius,10);
-    const h = parseFloat(height,10);
-    const l = parseFloat(length,10);
+    const r = parseFloat(radius,10)/2000;
+    const h = parseFloat(height,10)/1000;
+    const l = parseFloat(length,10)/1000;
     const d = parseFloat(density,10);
     if (!isNaN(r) && !isNaN(h) && !isNaN(l) && !isNaN(d) && r > 0 && h > 0 && l > 0 && d > 0) {
       const area = calArea(r,h);
-      console.log('area', area);
       const total_v = area * l;
       const total_quality = total_v * d;
       setVolume(total_v);
@@ -46,8 +45,7 @@ function App() {
 
   const calArea = (r, h) => {
     const degree = Math.acos((r-h)/r);
-    const totalArea = r * r * degree * 2;
-    console.log('totalArea',totalArea);
+    const totalArea = r * r * degree;
     const l = Math.tan(degree) * (r - h);
     const triangleArea = l * (r - h);
     return totalArea - triangleArea;
@@ -57,54 +55,19 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-      <label>
-      截面半径:
-        <textarea value={radius} onChange={handleRadiusChange} />
-      米
-      </label>
-
-      <br></br>
-
-      <label>
-      油面高度:
-        <textarea value={height} onChange={handleHeightChange } />
-      米
-      </label>
-
-      <br></br>
-
-      <label>
-      油管长度:
-        <textarea value={length} onChange={handleLengthChange } />
-      米
-      </label>
-
-      <br></br>
-
-      <label>
-      油密度:
-        <textarea value={density} onChange={handleDensityChange} />
-      吨/立方米
-      </label>
-
-      <br></br>
-      <button onClick={cal}>计算</button>
-      <br></br>
-
-      <label>
-      油体积:
-        <textarea value={volume} />
-      立方米
-      </label>
-
-      <br></br>
-
-      <label>
-      油量:
-        <textarea value={quality} />
-      吨
-      </label>
-        
+        <label>截面直径:<textarea value={radius} onChange={handleRadiusChange} />MM</label>
+        <br></br>
+        <label>油罐长度:<textarea value={length} onChange={handleLengthChange } />MM</label>
+        <br></br>
+        <label>油面高度:<textarea value={height} onChange={handleHeightChange } />MM</label>
+        <br></br>
+        <label>油密度:<textarea value={density} onChange={handleDensityChange} />吨/立方米</label>
+        <br></br>
+        <button onClick={cal}>计算</button>
+        <br></br>
+        <label>油体积:<textarea value={volume} />立方米</label>
+        <br></br>
+        <label> 油量:<textarea value={quality} />吨</label>
       </header>
     </div>
   );
